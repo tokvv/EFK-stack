@@ -1,0 +1,25 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:5
+    environment:
+      ES_JAVA_OPTS: -Xms500m -Xmx500m
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+  kibana:
+    image: kibana:5
+    links:
+    - elasticsearch:elasticsearch
+    labels:
+      rap.port: '5601'
+      rap.host: kibana-test.devbranch.space
+    ports:
+    - 8088:5601
+  fluentd:
+    build: https://github.com/tokvv/EFK-stack.git
+    volumes:
+    - /var/lib/docker/containers:/var/lib/docker/containers
+    links:
+    - elasticsearch:elasticsearch
