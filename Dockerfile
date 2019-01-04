@@ -1,5 +1,4 @@
 FROM fluent/fluentd:v1.3-debian
-MAINTAINER shmykyta
 RUN mkdir /etc/fluent
 
 RUN apt-get update && apt-get install --yes make libcurl4-gnutls-dev && apt-get clean all
